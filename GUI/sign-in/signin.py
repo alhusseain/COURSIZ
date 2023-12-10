@@ -12,8 +12,7 @@ def sign_in():
     username = request.form['username']
     password = request.form['password']
 
-    # Replace this with your authentication logic
-    if username == "k" and password == "Kimo gamed fa45":
+    if username == "Test" and password == "K.test":
         flash('Sign In successful!', 'success')
     else:
         flash('Invalid username or password', 'error')
@@ -26,7 +25,6 @@ def sign_up():
         username = request.form['username']
         password = request.form['password']
 
-        # Replace this with your sign-up logic
         flash(f'Username: {username}, Password: {password} created successfully!', 'success')
         return redirect(url_for('index'))
 

@@ -77,9 +77,11 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <img src="logon.png" alt="Logo" width="150">
-        </div>
+       
+<div class="logo">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="200" width="150">
+</div>
+
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
