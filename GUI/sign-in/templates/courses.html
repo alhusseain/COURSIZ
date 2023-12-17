@@ -1,0 +1,95 @@
+{% extends 'Layout.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Educational Web App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        /* New styles for the courses page */
+
+        .sidebar {
+            background-color: #007bff;
+            color: #ffffff;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 56px;
+            transition: 0.5s;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            margin-left: 0px;
+            padding: 20px;
+            transition: margin-left 0.5s;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+
+            .sidebar a {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="sidebar">
+    <a href="#course1">Course 1</a>
+    <a href="#course2">Course 2</a>
+    <a href="#course3">Course 3</a>
+    <!-- Add more courses as needed -->
+</div>
+
+<div class="content">
+    <h1>Courses</h1>
+    <p>Explore our available courses here.</p>
+    <!-- Add content specific to the courses page -->
+    <div id="course1">
+        <h2>Course 1</h2>
+        <p>Description for Course 1.</p>
+    </div>
+    <div id="course2">
+        <h2>Course 2</h2>
+        <p>Description for Course 2.</p>
+    </div>
+    <div id="course3">
+        <h2>Course 3</h2>
+        <p>Description for Course 3.</p>
+    </div>
+    <!-- Add more course sections as needed -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{% endblock %}
