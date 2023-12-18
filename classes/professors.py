@@ -1,6 +1,29 @@
 from users import *
 import requests
 import json
+from datetime import datetime, timezone, timedelta
+import pytz
+
+def get_timezone_offset(country = "Egypt"):
+    try:
+        timezone = pytz.country_timezones.get(country.upper())
+        if timezone:
+            tz = pytz.timezone(timezone[0])
+            utc_offset = tz.utcoffset(datetime.now())
+            offset_hours = utc_offset.total_seconds() / 3600
+            return offset_hours
+        else:
+            return None  # Country not found in the database
+        
+    except Exception as e:
+        return None
+
+def generate_iso_format(year, month, day, hour, minute, second = 1, millisecond = 1, get_timezone_offset(country) = 2):
+    user_datetime = datetime(year, month, day, hour, minute, second, 1000 * millisecond)
+    offset = timedelta(hours=timezone_offset)
+    user_datetime_with_offset = user_datetime - offset
+    iso_format = user_datetime_with_offset.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f"{offset.total_seconds() / 3600:+03.0f}:00"
+    return iso_format
 
 class professors(users):
     def sign_in(self, username, password):
@@ -18,26 +41,27 @@ class professors(users):
         elif choice == "Sign up":
             self.sign_up(username, email, password)
 
-    def create_teams_meeting(self, token, user_id):
+    
+    def create_teams_meeting(self, token, user_id, startYear, endYear, startMonth, endMonth, startDay, endDay, startHour, endHour, startMinute, endMinute, country = "Egypt" , subject = "User Meeting"):
+        # Replace user_id with the user id from portal.azure.com
         url = f"https://graph.microsoft.com/v1.0/users/{user_id}/onlineMeetings"
 
         headers = {
+            # replace token with the access token from portal.azure.com
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json'
         }
 
         payload = json.dumps({
-            "startDateTime":"2022-07-12T14:30:34.2444915-07:00",
-            "endDateTime":"2022-07-12T15:00:34.2464912-07:00",
-            "subject":"User Meeting"
+            "startDateTime": generate_iso_format(startYear, startMonth, startDay, startHour, startMinute, second = 1, millisecond = 1, get_timezone_offset(country) = 2),
+            "endDateTime": generate_iso_format(endYear, endMonth, endDay, endHour, endMinute, second = 1, millisecond = 1, get_timezone_offset(country) = 2),
+            "subject": subject
         })
 
         response = requests.request("POST", url, headers=headers, data=payload)
 
         if response.status_code == 201:
             meeting_url = response.json()['joinWebUrl']
-            print(f'Meeting created: {meeting_url}')
             return meeting_url
         else:
-            print(f'Could not create meeting, status code: {response.status_code}')
             return None
