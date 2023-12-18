@@ -3,7 +3,8 @@ class StreamItem:
         self.title = title
 
     def display(self):
-        print(f"Stream: {self.title}")
+        print(f"Stream : {self.title}")
+
 
 class Upload(StreamItem):
     def __init__(self, title, file):
@@ -12,6 +13,7 @@ class Upload(StreamItem):
 
     def display(self):
         print(f"Upload: {self.title} - File: {self.file}")
+
 
 class Announce(StreamItem):
     def __init__(self, title, message):
@@ -30,15 +32,27 @@ class Submit(StreamItem):
     def display(self):
         print(f"Submission: {self.title} - Assignment: {self.assignment}")
 
+
+class Attendance(StreamItem):
+    def __init__(self, title, student_name, present):
+        super().__init__(title)
+        self.student_name = student_name
+        self.present = present
+
+    def display(self):
+        status = "Yes" if self.present else "No"
+        print(f"Attendance: {self.title} - Student: {self.student_name} - Present: {status}")
+
+
 class Stream:
-    MAX_ITEMS = 100
+    MAX_ITEMS = 10
 
     def __init__(self):
         self.items = []
         self.size = 0
 
     def add_item(self, item):
-        if self.size < Stream.MAX_ITEMS:
+        if self.size < self.MAX_ITEMS:
             self.items.append(item)
             self.size += 1
         else:
@@ -49,22 +63,58 @@ class Stream:
             item.display()
 
 
+class Teacher:
+    def alert_submission(self, title, student_name, assignment_title):
+        print(f"Alert: Teacher {title} - Student {student_name} submitted {assignment_title}.")
+
+    def post_on_stream(self, item):
+        item.display()
+
+    def submit_attendance(self, title, student_name, present):
+        attendance = Attendance(title, student_name, present)
+        attendance.display()
+        # Logic to store attendance record
+
+
 def main():
     stream = Stream()
+    teacher = Teacher()
 
-    upload = Upload("File Upload", "document.txt")
-    stream.add_item(upload)
+    upload_type = input("Uploading? (Document, Announcement, Assignment): ")
 
-    add_announce = input("Add announcement? (yes/no): ").lower()
-    if add_announce == "yes":
-        announce = Announce("Important Announcement", "Meeting at 2 PM")
-        stream.add_item(announce)
+    if upload_type == "Document" or upload_type == "Lecture":
+        doc_title = input("Document title: ")
+        doc_content = input("Document content: ")
+        stream.add_item(Upload(doc_title, doc_content))
+    elif upload_type == "Announcement":
+        announce_title = input("Announcement title: ")
+        announce_content = input("Announcement content: ")
+        stream.add_item(Announce(announce_title, announce_content))
+    elif upload_type == "Assignment":
+        asg_title = input("Assignment title: ")
+        asg_type = input("Assignment type: ")
+        stream.add_item(Submit(asg_title, asg_type))
     else:
-        stream.add_item(Announce("No Announcement Added", ""))
-
-    stream.add_item(Submit("Assignment Submission", "Homework"))
+        print("Invalid upload type.")
 
     stream.display_stream()
+    print("________________________________________")
+    print("alert submittion ")
+    teacher_name = input("Teacher name: ")
+    student_name = input("Student name you want to alert: ")
+    alert_sub = input("Assessment reminded: ")
+    teacher.alert_submission(teacher_name, student_name, alert_sub)
+    print("_____________________________________________")
+
+    print("attendance tracker ")
+    class_name = input("Class name: ")
+    student_name = input("Student name: ")
+    attended = input("Attended? (True/False): ").lower() == "true"
+    teacher.submit_attendance(class_name, student_name, attended)
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":
