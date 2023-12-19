@@ -96,6 +96,7 @@ CREATE TABLE Enroll_in
 (
   Student_ID INT NOT NULL,
   Course_Code VARCHAR(50) NOT NULL,
+  grade FLOAT ,
   PRIMARY KEY (Student_ID, Course_Code),
   FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID),
   FOREIGN KEY (Course_Code) REFERENCES Courses(Course_Code)
