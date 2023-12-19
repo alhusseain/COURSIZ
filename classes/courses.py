@@ -34,9 +34,6 @@ class courses(students, professors):
         query.excute('''delete from Enroll_in where Student_ID = ? and Course_Code = ?''', (student.studentID, Course_Code))
         query.commit()
     
-    def getAverageGradesOfAllStudents(self, Course_Code):
-        query.excute('''select avg(grade) from Enroll_in where Course_Code = ?''', (Course_Code))
-        query.commit()
     
     
         
