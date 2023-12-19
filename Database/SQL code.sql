@@ -68,7 +68,7 @@ CREATE TABLE Uploads
   FOREIGN KEY (professorID) REFERENCES Teachers(TeacherID)
 );
 
-CREATE TABLE Sumbissions
+CREATE TABLE Submissions
 (
   Submission_ID INT NOT NULL UNIQUE,
   Document_link VARCHAR(500) NOT NULL,
