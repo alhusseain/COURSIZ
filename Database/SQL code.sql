@@ -1,7 +1,5 @@
 CREATE TABLE Users
 (
-  FirstName VARCHAR(50) NOT NULL,
-  LastName VARCHAR(50) NOT NULL,
   Email VARCHAR(100) NOT NULL,
   User_Type VARCHAR(50) NOT NULL,
   Account_creation_date VARCHAR(50) NOT NULL,
@@ -20,8 +18,6 @@ CREATE TABLE Students
   Email VARCHAR(100) NOT NULL,
   PRIMARY KEY (Student_ID),
   FOREIGN KEY (Email) REFERENCES Users(Email),
-  FOREIGN KEY (FirstName) REFERENCES Users(FirstName),
-  FOREIGN KEY (LastName) REFERENCES Users(LastName)
 );
 
 CREATE TABLE Teachers
@@ -32,8 +28,6 @@ CREATE TABLE Teachers
   Email VARCHAR(100) NOT NULL,
   PRIMARY KEY (TeacherID),
   FOREIGN KEY (Email) REFERENCES Users(Email),
-  FOREIGN KEY (FirstName) REFERENCES Users(FirstName),
-  FOREIGN KEY (LastName) REFERENCES Users(LastName)
 );
 
 CREATE TABLE SuperVisors
@@ -65,7 +59,7 @@ CREATE TABLE Uploads
   Date_of_Upload Date NOT NULL,
   Upload_header VARCHAR(50) NOT NULL,
   Upload_type VARCHAR(50) NOT NULL,
-  Upload_description VARCHAR(50000) NOT NULL,
+  Upload_description VARCHAR(8000) NOT NULL,
   Document_link VARCHAR(500) NOT NULL,
   professorID INT ,
   SupervisorID INT ,
@@ -88,7 +82,7 @@ CREATE TABLE Sumbissions
 CREATE TABLE Announcements
 (
   AnnouncementID INT NOT NULL,
-  Announcement VARCHAR(50000) NOT NULL,
+  Announcement VARCHAR(8000) NOT NULL,
   TeacherID INT ,
   Student_ID INT ,
   SupervisorID INT,
