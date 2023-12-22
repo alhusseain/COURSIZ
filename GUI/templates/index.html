@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stockify</title>
+    <title>Coursiz</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -52,14 +52,15 @@
 <body>
     <div class="container">
 
-        <div class="logo">
-            <img src="~/static/logo.png" alt="Logo" height="125" width="125">
-        </div>
-
         <div class="header">
-            <h2>Welcome to Coursiz!</h2>
+            <h2>Welcome to</h2>
         </div>
 
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo3.png') }}" alt="Logo" class="img-fluid" height="250" width="250">
+        </div>
+
+     
         <div class="header">
             <h3>Choose Your Role</h3>
         </div>

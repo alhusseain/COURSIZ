@@ -11,21 +11,21 @@
         }
 
         .navbar {
-            background-color: #be864a;
+            background-color: #f24343;
             color: #ffffff;
+            height: 70px; /* Set a fixed height for the navbar */
         }
 
         .navbar-brand {
             color: #ffffff !important;
-        }
-
-        .navbar-nav .nav-link {
-            color: #ffffff !important;
+            height: 100%; /* Make the navbar brand take up the full height */
+            display: flex;
+            align-items: center; /* Align the logo vertically */
         }
 
         .navbar-brand img {
-            width: 80px; /* Adjust the width as needed */
-            height: 50px; /* Maintain the aspect ratio */
+            width: auto; /* Allow the width to adjust based on the height */
+            max-height: 50px; /* Set a maximum height for the logo */
             margin-right: 10px; /* Optional margin for spacing */
         }
     </style>
@@ -34,26 +34,23 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <a class="navbar-brand" href="{{ url_for('home') }}">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
-    
+        <img src="{{ url_for('static', filename='logo3.png') }}" alt="Logo" class="img-fluid">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item {% if request.endpoint == 'home' %}active{% endif %}">
                 <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.endpoint == 'courses' %}active{% endif %}">
                 <a class="nav-link" href="{{ url_for('courses') }}">Courses</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.endpoint == 'about' %}active{% endif %}">
                 <a class="nav-link" href="{{ url_for('about') }}">About</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
-            </li>
+    
         </ul>
     </div>
 </nav>
@@ -65,6 +62,14 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    // Add this script to your HTML to highlight the current page in the navigation bar
+    $(document).ready(function () {
+        var currentPath = window.location.pathname;
+        $('.navbar-nav a[href="' + currentPath + '"]').addClass('active');
+    });
+</script>
 
 </body>
 </html>
