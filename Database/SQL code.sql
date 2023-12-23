@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Coursiz]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Database [Coursiz]    Script Date: 23/12/2023 13:45:23 ******/
 CREATE DATABASE [Coursiz]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [Coursiz] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_P
 GO
 USE [Coursiz]
 GO
-/****** Object:  Table [dbo].[Announcements]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Announcements]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[Announcements](
 	[Document_link] [varchar](max) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Courses]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Enroll_in]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Enroll_in]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Students]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Students]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sumbissions]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Sumbissions]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -167,7 +167,7 @@ UNIQUE NONCLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SuperVisors]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[SuperVisors]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -181,7 +181,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Teachers]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Teachers]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -195,7 +195,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Uploads]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Uploads]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -203,18 +203,18 @@ GO
 CREATE TABLE [dbo].[Uploads](
 	[Upload_ID] [int] NOT NULL,
 	[Course_code] [nvarchar](100) NOT NULL,
-	[Date_of_Upload] [date] NOT NULL,
 	[Upload_header] [varchar](max) NOT NULL,
 	[Upload_type] [varchar](max) NOT NULL,
 	[Upload_description] [varchar](max) NULL,
 	[Document_link] [varchar](max) NULL,
+	[Date_of_Upload] [varchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Upload_ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 22/12/2023 20:19:00 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 23/12/2023 13:45:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
