@@ -225,7 +225,7 @@ CREATE TABLE [dbo].[Users](
 	[Email] [nvarchar](100) NOT NULL,
 	[User_Type] [varchar](max) NOT NULL,
 	[Password] [varchar](max) NULL,
-	[Account_creation_date] [date] NULL,
+	[Account_creation_date] [varchar](max) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[Email] ASC
