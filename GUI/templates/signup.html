@@ -113,7 +113,7 @@
             </div>
             <div class="form-group">
                 {{ form.type.label(class="control-label") }}
-                {{ form.type(class="form-control", choices=[('student', 'Student'), ('teacher', 'Teacher'), ('supervisor', 'Supervisor')]) }}
+                {{ form.type(class="form-control",choices=['Student','Teacher','Supervisor']) }}
                 {% for error in form.type.errors %}
                     <small class="form-text text-danger">{{ error }}</small>
                 {% endfor %}

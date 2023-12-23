@@ -24,7 +24,7 @@ class SignUpForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    type = SelectField(u'Type',choices=[('student', 'Student'), ('teacher', 'Teacher'), ('supervisor', 'Supervisor')], validators=[DataRequired()])
+    type = SelectField(u'Type',choices=['Student', 'Teacher','Supervisor'], validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
 @app.route('/')
@@ -43,6 +43,7 @@ def sign_in():
         found=user.sign_in_validation()
         if found:
             flash('Sign In successful!', 'success')
+
             return redirect(url_for('home'))
         else:
             flash('Invalid username or password', 'error')

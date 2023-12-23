@@ -30,13 +30,41 @@ class users:
         self.First_name = None
         self.last_name = None
 
-    def set_type(self, types):
-        self.type=types
-
     def sign_up(self):
           cursor.execute("INSERT INTO dbo.Users(Email,First_Name,Last_Name,Password, User_Type,Account_creation_date) VALUES(?,?,?,?,?,?)", (self.email,self.First_name,self.Last_name, self.password, self.type,self.today))
           connection.commit()
-    
+          if self.type == "Student":
+              cursor.execute('SELECT MAX(Student_ID) FROM dbo.Students')
+              max_student_id = cursor.fetchone()[0]
+              if max_student_id is None:
+                self.student_id = 1
+              else:
+                self.student_id = max_student_id + 1
+              cursor.execute("INSERT INTO dbo.Students(Email,Student_ID) VALUES(?,?)", (self.email,self.student_id))
+              connection.commit()
+              print(cursor.messages)
+
+          elif self.type == "Teacher":
+              cursor.execute('SELECT MAX(TeacherID) FROM dbo.Teachers')
+              max_teacher_id = cursor.fetchone()[0]
+              if max_teacher_id is None:
+                self.teacher_id = 1
+              else:
+                self.teacher_id = max_teacher_id + 1
+              cursor.execute("INSERT INTO dbo.Teachers(Email,TeacherID) VALUES(?,?)", (self.email,self.teacher_id))
+              connection.commit()
+              print(cursor.messages)
+          elif self.type == "Supervisor":
+              cursor.execute('SELECT MAX(SuperVisorID) FROM dbo.Supervisors')
+              max_supervisor_id = cursor.fetchone()[0]
+              if max_supervisor_id is None:
+                self.supervisor_id = 1
+              else:
+                self.supervisor_id = max_supervisor_id + 1
+              cursor.execute("INSERT INTO dbo.SuperVisors(Email,SupervisorID) VALUES(?,?)", (self.email,self.supervisor_id))
+              connection.commit()
+              print(cursor.messages)
+
     def sign_in_validation(self):
         cursor.execute("SELECT * FROM dbo.Users WHERE Email = ? AND Password = ?", (self.email, self.password))
         if cursor.fetchone() is not None:
@@ -44,6 +72,18 @@ class users:
         else:
             return False
     
+    def sign_in_get_data(self):
+        cursor.execute('SELECT User_Type FROM dbo.Users WHERE Email = ?', (self.email))
+        self.type = cursor.fetchone()[0]
+
+        if self.type == "Student":
+            cursor.execute('SELECT First_Name FROM dbo.Users WHERE Email = ?', (self.email))
+            self.First_name = cursor.fetchone()[0]
+
+
+# user=users()
+# user.sign_up_values('husseainshalaby8@gmail.com','1234567899','hussein','shalaby','Student')
+# user.sign_up()
 
     # def roleSelection(self, role):
     #     if role == "Student":
