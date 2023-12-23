@@ -38,6 +38,12 @@
             padding: 20px;
             transition: margin-left 0.5s;
         }
+        .tab-content {
+    display: none;
+}
+      .tab-content:target {
+          display: block;
+                        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -55,136 +61,98 @@
     </style>
 </head>
 <body>
+  <div class="container">
+      <div class="sidebar">
+        {%for i in courses%}
+            <a href="#{{i}}">{{i}}</a>
+        {%endfor%}
+  </div>
 
-<div class="container">
-    <div class="sidebar">
-        <a href="#course1">Course 1</a>
-        <a href="#course2">Course 2</a>
-        <a href="#course3">Course 3</a>
-        <!-- Add more courses as needed -->
-    </div>
+    
+      <div class="content">
+        {%for i in courses%}
+              <div id="{{i}}" class="tab-content">
 
-    <div class="content">
+                <div class="list-group">
+                  <a type="button" data-toggle="modal" data-target="#addAnnouncementModal" class="list-group-item list-group-item-action" aria-current="true">
+                    Assignment {{i}}
+                  </a>
+                    <a href="" class="list-group-item list-group-item-action"> Exam{{i}}</a>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnnouncementModal{{i}}">
+                  Add New Announcement
+                </button>
+
+              <!-- Modal for adding a new announcement -->
+              <div class="modal fade" id="addAnnouncementModal{{i}}" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel{{i}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="addAnnouncementModalLabel{{i}}">Add New Announcement</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <!-- Add your form elements for a new announcement here -->
+                              <!-- Example: -->
+
+
+                              <div class="form-group">
+                                  <label for="announcementTitle">Choose Type: </label>
+                                  <select id="asgs" name="cars">
+                                      <option value="Quiz">Quiz</option>
+                                      <option value="Assignment">Assignment</option>
+                                      <option value="Grades">Grades</option>
+                                      <option value="survey">Survey</option>
+                                      <option value="In-class assignment">In-class assignment</option>
+                                    </select>
+          
+                                  </div>
+
+                              <div class="form-group">
+                                  <label for="announcementTitle">Title</label>
+                                  <input type="text" class="form-control" id="announcementTitle" placeholder="Enter title">
+                              </div>
+                              <div class="form-group">
+                                  <label for="announcementContent">Content</label>
+                                  <textarea class="form-control" id="announcementContent" rows="3" placeholder="Enter content"></textarea>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="file">
+                                      <i class="fas fa-file"></i>Add Attachement
+                                      <input type="text" id="myFile" name="filename">
+                                  </label>
+                              </div>
+
+                          
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="submit" class="btn btn-primary" id="saveAnnouncementButton">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+                 
+              
+       
+                
+    </div> 
+        {%endfor%}
+  </div>
       <!-- <h1>Courses</h1> -->
        <!--<p>Explore our available courses here.</p>-->
 
         <!-- Course 1 -->
-        <div id="course1">
-            <h2>Course 1 Announcements</h2>
-                    <div id="accordion">
-                        <div class="card">
-                          <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Exam Tommorow
-                              </button>
-                            </h5>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                             Exam is Tommorrow at G-06
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Assignment 2 
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                              Assignment 2 Was upload Deadline is set at 3 pm tommorrow
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Quiz Date
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                              ur Quiz will be on 19/12/2023
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      
-                      
-        
-
-       
 
         <!-- Add more course sections as needed -->
 
         <!-- Button to trigger the modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnnouncementModal">
-            Add New Announcement
-        </button>
-
-        <!-- Modal for adding a new announcement -->
-        <div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addAnnouncementModalLabel">Add New Announcement</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Add your form elements for a new announcement here -->
-                        <!-- Example: -->
-
-
-                        <div class="form-group">
-                            <label for="announcementTitle">Choose Type: </label>
-                            <select id="asgs" name="cars">
-                                <option value="Quiz">Quiz</option>
-                                <option value="Assignment">Assignment</option>
-                                <option value="Grades">Grades</option>
-                                <option value="survey">Survey</option>
-                                <option value="In-class assignment">In-class assignment</option>
-                              </select>
-    
-                            </div>
-
-                        <div class="form-group">
-                            <label for="announcementTitle">Title</label>
-                            <input type="text" class="form-control" id="announcementTitle" placeholder="Enter title">
-                        </div>
-                        <div class="form-group">
-                            <label for="announcementContent">Content</label>
-                            <textarea class="form-control" id="announcementContent" rows="3" placeholder="Enter content"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="file">
-                                <i class="fas fa-file"></i>Add Attachement
-                                <input type="file" id="myFile" name="filename">
-                            </label>
-                        </div>
-
-                     
-                    </div>
-
-                  
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveAnnouncementButton">Save Announcement</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

@@ -30,9 +30,16 @@ class users:
         self.First_name = None
         self.last_name = None
 
+    def get_main(self,name,type,email,id):
+        self.name=name
+        self.type=type
+        self.email=email
+        self.id=id
+
     def sign_up(self):
           cursor.execute("INSERT INTO dbo.Users(Email,First_Name,Last_Name,Password, User_Type,Account_creation_date) VALUES(?,?,?,?,?,?)", (self.email,self.First_name,self.Last_name, self.password, self.type,self.today))
           connection.commit()
+
           if self.type == "Student":
               cursor.execute('SELECT MAX(Student_ID) FROM dbo.Students')
               max_student_id = cursor.fetchone()[0]
@@ -75,10 +82,24 @@ class users:
     def sign_in_get_data(self):
         cursor.execute('SELECT User_Type FROM dbo.Users WHERE Email = ?', (self.email))
         self.type = cursor.fetchone()[0]
+        cursor.execute('SELECT First_Name,Last_Name FROM dbo.Users WHERE Email = ?', (self.email))
+        fetched=cursor.fetchone()
+        self.First_name = fetched[0]
+        self.Last_name = fetched[1]
 
         if self.type == "Student":
-            cursor.execute('SELECT First_Name FROM dbo.Users WHERE Email = ?', (self.email))
-            self.First_name = cursor.fetchone()[0]
+            cursor.execute('SELECT Student_ID FROM dbo.Students WHERE Email = ?', (self.email))
+            self.student_id = cursor.fetchone()[0]
+            return self.First_name,self.Last_name, self.student_id,self.type
+        if self.type == "Teacher":
+            cursor.execute('SELECT TeacherID FROM dbo.Teachers WHERE Email = ?', (self.email))
+            self.teacher_id = cursor.fetchone()[0]
+            return self.First_name, self.Last_name, self.teacher_id,self.type
+        if self.type=="Supervisor":
+            cursor.execute('SELECT SupervisorID FROM dbo.Supervisors WHERE Email = ?', (self.email))
+            self.supervisor_id = cursor.fetchone()[0]
+            return self.First_name, self.Last_name, self.supervisor_id,self.type
+
 
 
 # user=users()

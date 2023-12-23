@@ -2,11 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField,SelectField
 from wtforms.validators import DataRequired
+import pyodbc
 import sys
 import os
 sys.path.insert(0, os.path.abspath('classes'))
 import users
-import pyodbc
+from course import Course_class
+from Students import students
+from Teacher import teacher
+from Upload import upload
 connection=pyodbc.connect('Driver={SQL Server};SERVER=DESKTOP-9IHIA03;DATABASE=Coursiz;Trusted_Connection=yes')
 cursor = connection.cursor()
 
@@ -31,6 +35,25 @@ class SignUpForm(FlaskForm):
 def index():
     return render_template('index.html')
 
+
+main_user=users.users()
+
+@app.route('/create_course', methods=['POST'])
+def create_course():
+    course_name = request.form['course_name']
+    teacher_name = request.form['teacher_name']
+    year = request.form['year']
+    semester = request.form['semester']
+    course_capacity = request.form['course_capacity']
+    course=Course_class(course_name,year,semester,course_capacity,teacher_name)
+    found=course.createCourse()
+    if found:
+        flash('Course created successfully!', 'success')
+        return redirect(url_for('home'))
+    else:
+        return "error please revise your input"
+
+
 @app.route('/Signin', methods=['GET', 'POST'])
 def sign_in():
     form = SignInForm()
@@ -42,13 +65,26 @@ def sign_in():
         user.sign_in_values(Email,password)
         found=user.sign_in_validation()
         if found:
-            flash('Sign In successful!', 'success')
-
+            First_name,Last_name,id,send_type=user.sign_in_get_data()
+            name=First_name+" "+Last_name
+            main_user.get_main(name,send_type,user.email,id)
             return redirect(url_for('home'))
         else:
             flash('Invalid username or password', 'error')
 
     return render_template('Signin.html', form=form)
+
+@app.route('/enroll_course', methods=['POST'])
+def enroll():
+    course_id = request.form['course_id']
+    student_user=students(main_user.id)
+    found=student_user.addStudentToCourse(course_id)
+    if not found:
+        return "error please revise your input"
+    else:
+        flash('Course enrolled successfully!', 'success')
+        return redirect(url_for('home'))
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
@@ -65,16 +101,35 @@ def sign_up():
         user.sign_up()
         flash(f'Email: {Email}, Password: {password} created successfully!', 'success')
         return redirect(url_for('sign_in'))
-
     return render_template('signup.html', form=form)
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    name = main_user.name
+    id = main_user.id
+    type = main_user.type
+    email=main_user.email
+    return render_template('home.html',name=name,id=id, type=type,email=email)
 
-@app.route('/courses')
+# @app.route('/layout')
+# def layout():
+#     name = request.args.get('name')
+#     id = request.args.get('id')
+#     send_type = request.args.get('send_type')
+#     return render_template('Layout.html',name=name,id=id,send_type=send_type)
+
+
+@app.route('/courses',methods=['GET','POST'])
 def courses():
-    return render_template('courses.html')
+    if main_user.type=="Student":
+        type_user=students(main_user.id)
+    elif main_user.type=="Teacher":
+        type_user=teacher(main_user.id)
+    course_codes=type_user.get_courses()
+    if courses:
+        return render_template('courses.html',courses=course_codes)
+    else:
+        return "error please revise your input"
 
 @app.route('/about')
 def about():

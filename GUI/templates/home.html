@@ -12,8 +12,88 @@
 
 <div class="container">
     <div class="jumbotron mt-5">
-        <h1 class="display-4">Welcome to our Coursiz!</h1>
+        <h1 class="display-4">Welcome to our Coursiz, {{name}}!</h1>
         <p class="lead">Explore our courses and enhance your knowledge.</p>
+    </div>
+    <div>
+        {% if type == "Student" %}
+            <div class="enroll-btn-container">
+                <button type="button" data-toggle="modal" data-target="#EnrollCourse"class="btn btn-primary btn-lg">Enroll in course</button>
+            </div>
+        {% elif type == "Supervisor" %}
+            <div class="enroll-btn-container">
+                <button type="button" data-toggle="modal" data-target="#CreateCourse"class="btn btn-primary btn-lg">Create Course</button>
+            </div>
+        {% elif type=="Teacher"%}
+            <div class="enroll-btn-container">
+                <button type="button">View Courses</button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal fade" id="CreateCourse" tabindex="-1" role="dialog" aria-labelledby="CreateCourseLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CreateCourseLabel">Add New Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form elements for a new announcement here -->
+                <!-- Example: -->
+                <div class="form-group">
+                    <form action="/create_course" method="POST">
+                        <label for="course_name">Course Name:</label>
+                        <input class="form-control" type="text" id="course_name" name="course_name">
+                        <br>
+                        <label for="teacher_name">Teacher Name:</label>
+                        <input class="form-control"     type="text" id="teacher_name" name="teacher_name">
+                        <br>
+                        <label for="year">Year:</label>
+                        <input class= "form-control" type="text" id="year" name="year">
+                        <br>
+                        <label for="semester">Semester:</label>
+                        <input class="form-control" type="text" id="semester" name="semester">
+                        <br>
+                        <label for="course_capacity">Course Capacity:</label>
+                        <input Class= "form-control" type="text" id="course_capacity" name="course_capacity">
+                        <br>
+                        <input type="submit" value="Create Course">
+                    </form>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="EnrollCourse" tabindex="-1" role="dialog" aria-labelledby="EnrollCourseLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="EnrollCourseLabel">Enroll in course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form elements for a new announcement here -->
+                <!-- Example: -->
+                <div class="form-group">
+                    <form action="/enroll_course" method="POST">
+                        <label for="course_name">Course ID:</label>
+                        <input class="form-control" type="text" id="course_id" name="course_id">
+                        <br>
+                        <input type="submit" value="EnrollCourse">
+                    </form>
+            
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
