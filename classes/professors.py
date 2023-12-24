@@ -1,19 +1,14 @@
 from users import *
-
+import databaseConnection
+c = connection.cursor()
 class professors(users):
-    def sign_in(self, username, password):
-        if username == "1" and password == "1":
-            return true
-        else:
-            return false
-
-    def sign_up(self, username, email, password):
-        return username, email, password
-    
-    def studentsEntry(self, choice):
-        if choice == "Sign in":
-            self.sign_in(username, password)
-        elif choice == "Sign up":
-            self.sign_up(username, email, password)
-
-    
+    def __init__(self, name, email, password, professorID):
+        super().__init__(name, email, password)
+        self.professorID = professorID
+        
+    # Will allow teachers to send to each student their grade
+    def sendGrade(self, student, course, grade):
+        c.execute('''insert into Enroll_in(Student_ID, Course_Code, grade)
+            values (?, ?, ?)''', (student.studentID, course.courseCode, grade))
+        c.commit()
+        c.close()
