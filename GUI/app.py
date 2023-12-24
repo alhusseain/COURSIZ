@@ -54,6 +54,20 @@ def create_course():
         return "error please revise your input"
 
 
+@app.route('/Create_upload', methods=['POST'])
+def create_announcement():
+    request_data = request.form
+    Course_code = request_data['CourseCode']
+    Upload_type = request_data['Type']
+    Upload_title = request_data['Title']
+    Upload_Description = request_data['Description']
+    Upload_link = request_data['Link']
+
+    # Create a new announcement.
+    Upload = upload()
+    Upload.insert_upload(Upload_title,Upload_type,Upload_Description, Upload_link,Course_code)
+    return redirect(url_for('courses'))
+
 @app.route('/Signin', methods=['GET', 'POST'])
 def sign_in():
     form = SignInForm()
@@ -126,8 +140,40 @@ def courses():
     elif main_user.type=="Teacher":
         type_user=teacher(main_user.id)
     course_codes=type_user.get_courses()
+    upload_id=[]
+    upload_header=[]
+    upload_type=[]
+    upload_description=[]
+    upload_link=[]
+    upload_date=[]
+    for i in course_codes:
+        upload_it=upload()
+        upload_it.upload_info(i)
+        upload_list=[]
+        header_list=[]
+        type_list=[]
+        description_list=[]
+        link_list=[]
+        date_list=[]
+
+        for j in range(len(upload_it.up_id)):
+            upload_list.append(upload_it.up_id[j])
+            header_list.append(upload_it.up_header[j])
+            type_list.append(upload_it.up_type[j])
+            description_list.append(upload_it.up_desc[j])
+            link_list.append(upload_it.up_link[j])
+            date_list.append(upload_it.up_date[j])
+
+        upload_description.append(description_list)        
+        upload_id.append(upload_list)
+        upload_header.append(header_list)
+        upload_type.append(type_list)
+        upload_link.append(link_list)
+        upload_date.append(date_list)
+
+    courses=course_codes
     if courses:
-        return render_template('courses.html',courses=course_codes)
+        return render_template('courses.html',courses=course_codes,upload_id=upload_id,upload_header=upload_header,upload_type=upload_type,user_type=main_user.type,upload_description=upload_description,upload_date=upload_date,upload_link=upload_link)
     else:
         return "error please revise your input"
 
