@@ -66,95 +66,110 @@
         {%for i in courses%}
             <a href="#{{i}}">{{i}}</a>
         {%endfor%}
-  </div>
+      </div>
 
     
       <div class="content">
-        {%for i in courses%}
-              <div id="{{i}}" class="tab-content">
+        {%for i in range(courses|length)%}
+          <div id="{{courses[i]}}" class="tab-content">
 
-                <div class="list-group">
-                  <a type="button" data-toggle="modal" data-target="#addAnnouncementModal" class="list-group-item list-group-item-action" aria-current="true">
-                    Assignment {{i}}
-                  </a>
-                    <a href="" class="list-group-item list-group-item-action"> Exam{{i}}</a>
-                </div>
+              <div class="list-group">
+                {%for j in range(upload_id[i]|length)%}
+                  <button type="button" data-toggle="modal" data-target="#Announcement{{upload_id[i][j]}}" class="list-group-item list-group-item-action" aria-current="true">
+                    <b>{{upload_type[i][j]}}</b>: {{upload_header[i][j]}}
+                  </button> 
+                {%endfor%}
+              </div>
+                {%for k in range(upload_id[i]|length)%}
+                        <div class="modal fade " id="Announcement{{upload_id[i][k]}}" tabindex="-1" role="dialog" aria-labelledby="Announcement{{upload_id[i][k]}}label" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="Announcement{{upload_id[i][k]}}label">{{upload_header[i][k]}}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h6>Description</h6>
+                                    <a>{{upload_description[i][k]}}</a>
+                                    {%if upload_link[i][k] !=""%}
+                                      {%if upload_link[i][k] !='None'%}
+                                        <p><b>Document Link:</b> {{upload_link[i][k]}}</p>
+                                      {%endif%}
+                                    {%endif%}
+                                    {%if upload_date[i][k] != 'None' %}
+                                      <p><i>Date Created</i>: {{upload_date[i][k]}} </p>
+                                    {%endif%}
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                {%endfor%}
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnnouncementModal{{i}}">
-                  Add New Announcement
-                </button>
+
+                {%if user_type == 'Teacher'%}
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnnouncementModal{{courses[i]}}">
+                    Add New Announcement
+                  </button>
 
               <!-- Modal for adding a new announcement -->
-              <div class="modal fade" id="addAnnouncementModal{{i}}" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel{{i}}" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="addAnnouncementModalLabel{{i}}">Add New Announcement</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <!-- Add your form elements for a new announcement here -->
-                              <!-- Example: -->
-
-
-                              <div class="form-group">
-                                  <label for="announcementTitle">Choose Type: </label>
-                                  <select id="asgs" name="cars">
-                                      <option value="Quiz">Quiz</option>
-                                      <option value="Assignment">Assignment</option>
-                                      <option value="Grades">Grades</option>
-                                      <option value="survey">Survey</option>
-                                      <option value="In-class assignment">In-class assignment</option>
-                                    </select>
-          
-                                  </div>
-
-                              <div class="form-group">
-                                  <label for="announcementTitle">Title</label>
-                                  <input type="text" class="form-control" id="announcementTitle" placeholder="Enter title">
-                              </div>
-                              <div class="form-group">
-                                  <label for="announcementContent">Content</label>
-                                  <textarea class="form-control" id="announcementContent" rows="3" placeholder="Enter content"></textarea>
-                              </div>
-
-                              <div class="form-group">
-                                  <label for="file">
-                                      <i class="fas fa-file"></i>Add Attachement
-                                      <input type="text" id="myFile" name="filename">
-                                  </label>
-                              </div>
-
-                          
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <input type="submit" class="btn btn-primary" id="saveAnnouncementButton">
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                    <div class="modal fade" id="addAnnouncementModal{{courses[i]}}" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel{{courses[i]}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAnnouncementModalLabel{{courses[i]}}">New {{courses[i]}} announcement</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Add your form elements for a new announcement here -->
+                                    <!-- Example: -->
+                                    <form action="/Create_upload" method="post">
+                                      <label for="announcementTitle">Course Code:</label>
+                                      <input type="text" class="form-control" name="CourseCode" id="announcementCourse" placeholder="{{courses[i]}}" value="{{courses[i]}}">
+                                      <p></p>  
+                                      <label for="announcementType">Choose Type: </label>
+                                        <select id="asgs" name="Type">
+                                            <option value="Quiz">Quiz</option>
+                                            <option value="Assignment">Assignment</option>
+                                            <option value="Grades">Grades</option>
+                                            <option value="survey">Survey</option>
+                                            <option value="In-class assignment">In-class assignment</option>
+                                        </select>
+                                        <p></p>
+                                        <label for="announcementTitle">Title</label>
+                                        <input type="text" class="form-control" id="announcementTitle" name="Title" placeholder="Enter title" required>
+                                        <label for="announcementDescritption">Description</label>
+                                        <textarea class="form-control" id="announcementDescritption" name="Description" rows="3" placeholder="Enter content" value="No Description"></textarea>
+                                        <label for="file">Add link:</label>
+                                        <input type="text" id="file" name="Link" value="None">
+                                    
+                                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn btn-primary" id="saveAnnouncementButton">
+                                </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div> 
+                {%endif%}
 
 
                  
               
        
                 
-    </div> 
+          </div> 
         {%endfor%}
+      </div>
   </div>
-      <!-- <h1>Courses</h1> -->
-       <!--<p>Explore our available courses here.</p>-->
-
-        <!-- Course 1 -->
-
-        <!-- Add more course sections as needed -->
-
-        <!-- Button to trigger the modal -->
-    </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
