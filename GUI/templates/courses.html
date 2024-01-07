@@ -1,0 +1,180 @@
+{% extends 'Layout.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Educational Web App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* New styles for the courses page */
+        .sidebar {
+            background-color: #007bff;
+            color: #ffffff;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 56px;
+            transition: 0.5s;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            margin-left: 0px;
+            padding: 20px;
+            transition: margin-left 0.5s;
+        }
+        .tab-content {
+    display: none;
+}
+      .tab-content:target {
+          display: block;
+                        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                padding-top: 1px;
+            }
+
+            .sidebar a {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+      <div class="sidebar">
+        {%for i in courses%}
+            <a href="#{{i}}">{{i}}</a>
+        {%endfor%}
+      </div>
+
+    
+      <div class="content">
+        {%for i in range(courses|length)%}
+          <div id="{{courses[i]}}" class="tab-content">
+
+              <div class="list-group">
+                {%for j in range(upload_id[i]|length)%}
+                  <button type="button" data-toggle="modal" data-target="#Announcement{{upload_id[i][j]}}" class="list-group-item list-group-item-action" aria-current="true">
+                    <b>{{upload_type[i][j]}}</b>: {{upload_header[i][j]}}
+                  </button> 
+                {%endfor%}
+              </div>
+                {%for k in range(upload_id[i]|length)%}
+                        <div class="modal fade " id="Announcement{{upload_id[i][k]}}" tabindex="-1" role="dialog" aria-labelledby="Announcement{{upload_id[i][k]}}label" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="Announcement{{upload_id[i][k]}}label">{{upload_header[i][k]}}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h6>Description</h6>
+                                    <a>{{upload_description[i][k]}}</a>
+                                    {%if upload_link[i][k] !=""%}
+                                      {%if upload_link[i][k] !='None'%}
+                                        <p><b>Document Link:</b> {{upload_link[i][k]}}</p>
+                                      {%endif%}
+                                    {%endif%}
+                                    {%if upload_date[i][k] != 'None' %}
+                                      <p><i>Date Created</i>: {{upload_date[i][k]}} </p>
+                                    {%endif%}
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                {%endfor%}
+
+
+                {%if user_type == 'Teacher'%}
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnnouncementModal{{courses[i]}}">
+                    Add New Announcement
+                  </button>
+
+              <!-- Modal for adding a new announcement -->
+                    <div class="modal fade" id="addAnnouncementModal{{courses[i]}}" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel{{courses[i]}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAnnouncementModalLabel{{courses[i]}}">New {{courses[i]}} announcement</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Add your form elements for a new announcement here -->
+                                    <!-- Example: -->
+                                    <form action="/Create_upload" method="post">
+                                      <label for="announcementTitle">Course Code:</label>
+                                      <input type="text" class="form-control" name="CourseCode" id="announcementCourse" placeholder="{{courses[i]}}" value="{{courses[i]}}">
+                                      <p></p>  
+                                      <label for="announcementType">Choose Type: </label>
+                                        <select id="asgs" name="Type">
+                                            <option value="Quiz">Quiz</option>
+                                            <option value="Assignment">Assignment</option>
+                                            <option value="Grades">Grades</option>
+                                            <option value="survey">Survey</option>
+                                            <option value="In-class assignment">In-class assignment</option>
+                                        </select>
+                                        <p></p>
+                                        <label for="announcementTitle">Title</label>
+                                        <input type="text" class="form-control" id="announcementTitle" name="Title" placeholder="Enter title" required>
+                                        <label for="announcementDescritption">Description</label>
+                                        <textarea class="form-control" id="announcementDescritption" name="Description" rows="3" placeholder="Enter content" value="No Description"></textarea>
+                                        <label for="file">Add link:</label>
+                                        <input type="text" id="file" name="Link" value="None">
+                                    
+                                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn btn-primary" id="saveAnnouncementButton">
+                                </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div> 
+                {%endif%}
+
+
+                 
+              
+       
+                
+          </div> 
+        {%endfor%}
+      </div>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{% endblock %}
