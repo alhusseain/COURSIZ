@@ -54,7 +54,10 @@ Date📅: 3/01/2024 From 21:00 to 22:07
   + Selenium IDE will be used for catching and noting down functionality errors
   + Unit tests on classes will be generated and tested
   + Azure will be our deployment choice
-![image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.techlistic.com%2F2021%2F10%2Fselenium-ide-commands.html&psig=AOvVaw1phyKIzZsOiV1d4SVrn9CS&ust=1704831040592000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPiC2NfMzoMDFQAAAAAdAAAAABAD)
 
-![image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fdatascientest.com%2Fen%2Fazure-devops-definitions-devops-methods&psig=AOvVaw2D6T70IbE0ICgz7T-fi64j&ust=1704831077455000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJCR6-rMzoMDFQAAAAAdAAAAABAD)
+![image](https://github.com/alhusseain/COURSIZ/assets/80164892/f184ade8-ad37-40ba-a535-1ec81aa6403d)
+
+![image](https://github.com/alhusseain/COURSIZ/assets/80164892/9d84b2a6-b5c3-4af9-b69d-d2e5c7772126)
+
+
 
