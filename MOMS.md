@@ -45,3 +45,16 @@ Date📅: 06/12/2023 From 22:10 to 22:50
 Date📅: 14/12/2023 From 20:00 to 21:00
 - Progress in GUI implementation by Kareem as The main interface was done. 
 - Mohy and Ahmed started the implementation of the main classes
+
+## Meeting 5 ⭐
+Date📅: 3/01/2024 From 21:00 to 22:07
+- Overview on phase 1, and reflection on what should be improved (error handling, Gui Changes)
+- Revising Phase 2 tasks and discussing for improvement
+- Discussed Testing and deployment method:
+  + Selenium IDE will be used for catching and noting down functionality errors
+  + Unit tests on classes will be generated and tested
+  + Azure will be our deployment choice
+![image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.techlistic.com%2F2021%2F10%2Fselenium-ide-commands.html&psig=AOvVaw1phyKIzZsOiV1d4SVrn9CS&ust=1704831040592000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPiC2NfMzoMDFQAAAAAdAAAAABAD)
+
+![image](https://www.google.com/url?sa=i&url=https%3A%2F%2Fdatascientest.com%2Fen%2Fazure-devops-definitions-devops-methods&psig=AOvVaw2D6T70IbE0ICgz7T-fi64j&ust=1704831077455000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJCR6-rMzoMDFQAAAAAdAAAAABAD)
+
