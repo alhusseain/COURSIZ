@@ -154,7 +154,6 @@ GO
 CREATE TABLE [dbo].[Sumbissions](
 	[Submission_ID] [int] NOT NULL,
 	[Submission_type] [varchar](max) NOT NULL,
-	[Deadline_Date] [date] NULL,
 	[Document_link] [varchar](max) NULL,
 UNIQUE NONCLUSTERED 
 (
@@ -229,6 +228,10 @@ PRIMARY KEY CLUSTERED
 GO
 ALTER TABLE [dbo].[Announcements]  WITH CHECK ADD FOREIGN KEY([Student_ID])
 REFERENCES [dbo].[Students] ([Student_ID])
+GO
+ALTER TABLE Sumbissions
+ADD CONSTRAINT studentID_FK
+FOREIGN KEY (studentID) REFERENCES Students(Student_ID);
 GO
 ALTER TABLE [dbo].[Announcements]  WITH CHECK ADD FOREIGN KEY([Submission_ID])
 REFERENCES [dbo].[Sumbissions] ([Submission_ID])
