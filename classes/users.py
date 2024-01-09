@@ -99,6 +99,9 @@ class users:
             cursor.execute('SELECT SupervisorID FROM dbo.Supervisors WHERE Email = ?', (self.email))
             self.supervisor_id = cursor.fetchone()[0]
             return self.First_name, self.Last_name, self.supervisor_id,self.type
+    
+    # def course_info():
+
 
 
 
