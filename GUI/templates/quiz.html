@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .options label:hover {
+            background-color: #45a049;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #timer {
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Welcome to the Quiz!</h1>
+    <button onclick="startQuiz()">Start Quiz</button>
+    <div id="question-container" class="question"></div>
+    <div id="options-container" class="options"></div>
+    <button onclick="submitAnswer()">Submit Answer</button>
+    <div id="result"></div>
+    <div id="timer">Time remaining: <span id="countdown"></span></div>
+</div>
+
+<script>
+    var quizData = [
+        {
+            question: "What is the capital of France?",
+            options: ["Berlin", "Paris", "Madrid", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "Which planet is known as the Red Planet?",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Mars"
+        }
+        // Add more questions as needed
+    ];
+
+    var currentQuestionIndex = 0;
+    var userAnswers = [];
+    var quizStarted = false;
+    var countdown;
+
+    function startQuiz() {
+        if (!quizStarted) {
+            quizStarted = true;
+            loadQuestion();
+            startTimer(60); // Set the countdown time in seconds
+        }
+    }
+
+    function loadQuestion() {
+        var currentQuestion = quizData[currentQuestionIndex];
+        document.getElementById('question-container').innerText = currentQuestion.question;
+
+        var optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        currentQuestion.options.forEach(function (option, index) {
+            var optionElement = document.createElement('label');
+            optionElement.innerHTML = '<input type="radio" name="answer" value="' + option + '"> ' + option;
+            optionsContainer.appendChild(optionElement);
+        });
+    }
+
+    function submitAnswer() {
+        if (quizStarted) {
+            var selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                userAnswers[currentQuestionIndex] = selectedOption.value;
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            } else {
+                alert('Please select an answer before submitting.');
+            }
+        }
+    }
+
+    function showResult() {
+        quizStarted = false;
+        var correctCount = 0;
+        for (var i = 0; i < quizData.length; i++) {
+            if (userAnswers[i] === quizData[i].correctAnswer) {
+                correctCount++;
+            }
+        }
+
+        var resultContainer = document.getElementById('result');
+        resultContainer.innerText = 'You scored ' + correctCount + ' out of ' + quizData.length + ' correct.';
+    }
+
+    function startTimer(seconds) {
+        countdown = seconds;
+        updateTimer();
+
+        var timerInterval = setInterval(function () {
+            countdown--;
+
+            if (countdown <= 0) {
+                clearInterval(timerInterval);
+                showResult();
+            } else {
+                updateTimer();
+            }
+        }, 1000);
+    }
+
+    function updateTimer() {
+        var countdownElement = document.getElementById('countdown');
+        countdownElement.textContent = countdown + 's';
+    }
+</script>
+
+</body>
+</html>

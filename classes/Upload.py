@@ -1,6 +1,6 @@
 import pyodbc
 import pyodbc
-connection=pyodbc.connect('Driver={SQL Server};SERVER=DESKTOP-9IHIA03;DATABASE=Coursiz;Trusted_Connection=yes')
+connection=pyodbc.connect('Driver={SQL Server};SERVER=KAREEM;DATABASE=Coursiz;Trusted_Connection=yes')
 query = connection.cursor()
 from datetime import datetime
 
