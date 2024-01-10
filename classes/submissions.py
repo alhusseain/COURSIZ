@@ -18,13 +18,7 @@ class submissions:
             query.execute("SELECT COUNT(*) FROM Submissions")
             number_of_rows = query.fetchone()[0]
             Submission_ID = number_of_rows + 1
-            query.execute("INSERT INTO Submissions(Submission_ID, Submission_type, studentID, Document_link, Course_Code) VALUES(?, ?, ?, ?, ?)", (Submission_ID, Submission_type, studentID, Document_link, courseCode))
-            databaseConnection.connection.commit()
-            return True
-        elif document_link.startswith("https://drive.google.com/") and document_link.endswith("/edit"):
-            query.execute("SELECT COUNT(*) FROM Submissions")
-            number_of_rows = query.fetchone()[0]
-            Submission_ID = number_of_rows + 1
+            Submission_type = "Document"
             query.execute("INSERT INTO Submissions(Submission_ID, Submission_type, studentID, Document_link, Course_Code) VALUES(?, ?, ?, ?, ?)", (Submission_ID, Submission_type, studentID, Document_link, courseCode))
             databaseConnection.connection.commit()
             return True
@@ -32,6 +26,7 @@ class submissions:
             query.execute("SELECT COUNT(*) FROM Submissions")
             number_of_rows = query.fetchone()[0]
             Submission_ID = number_of_rows + 1
+            Submission_type = "Project"
             query.execute("INSERT INTO Submissions(Submission_ID, Submission_type, studentID, Document_link, Course_Code) VALUES(?, ?, ?, ?, ?)", (Submission_ID, Submission_type, studentID, Document_link, courseCode))
             databaseConnection.connection.commit()
             return True
@@ -49,9 +44,9 @@ class submissions:
         databaseConnection.connection.commit()
         return True
     
-    def updateSubmission(self, Submission_ID, Submission_type, Deadline_Date, Document_link):
+    def updateSubmission(self, Submission_ID, Submission_type, Document_link):
         query = databaseConnection.connection.cursor()
-        query.execute("UPDATE Submissions SET Submission_type = ?, Deadline_Date = ?, Document_link = ? WHERE Submission_ID = ?", (Submission_type, Deadline_Date, Document_link, Submission_ID))
+        query.execute("UPDATE Submissions SET Submission_type = ?, Document_link = ? WHERE Submission_ID = ?", (Submission_type, Document_link, Submission_ID))
         databaseConnection.connection.commit()
         return True
     
