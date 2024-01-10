@@ -14,7 +14,7 @@ class submissions:
         query = databaseConnection.connection.cursor()
         if document_link is None:
             return False
-        elif document_link.startswith("https://docs.google.com/") and document_link.endswith("/edit"):
+        elif document_link.startswith("https://docs.google.com/") and document_link.endswith("/sharing"):
             query.execute("SELECT COUNT(*) FROM Submissions")
             number_of_rows = query.fetchone()[0]
             Submission_ID = number_of_rows + 1
