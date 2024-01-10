@@ -22,8 +22,8 @@ variables:
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
 
-  # Python version: 3.7
-  pythonVersion: '3.7'
+  # Python version: 3.12
+  pythonVersion: '3.12'
 
 stages:
 - stage: Build
@@ -82,6 +82,7 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App : '
             inputs:
+              appType: webAppLinux
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
