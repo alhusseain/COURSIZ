@@ -1,5 +1,5 @@
 import pyodbc
-connection=pyodbc.connect('Driver={SQL Server};SERVER=DESKTOP-9IHIA03;DATABASE=Coursiz;Trusted_Connection=yes')
+connection=pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=tcp:coursizdata.database.windows.net,1433;Database=finaldatabase;Uid=coursizsa;Pwd={ZC-coursiz};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
 cursor = connection.cursor()
 from datetime import datetime
 
