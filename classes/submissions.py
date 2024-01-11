@@ -63,3 +63,5 @@ class submissions:
     #     query = databaseConnection.connection.cursor()
     #     query.execute("SELECT * FROM Submissions")
     #     return query.fetchall()
+
+

@@ -38,3 +38,4 @@ class students(users):
             i=i[0]
             fetched.append(i)
         return fetched
+

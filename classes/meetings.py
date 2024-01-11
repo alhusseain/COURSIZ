@@ -69,3 +69,4 @@ def create_teams_meeting(self, token, user_id, startYear, endYear, startMonth, e
         return meeting_url
     else:
         return None
+
