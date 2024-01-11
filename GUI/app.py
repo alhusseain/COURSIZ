@@ -5,18 +5,20 @@ from wtforms.validators import DataRequired
 import pyodbc
 import sys
 import os
-sys.path.insert(0, os.path.abspath('classes'))
+sys.path.insert(0, 'C:/Users/fires/Coursiz final/COURSIZ/COURSIZ/classes')
 import users
 from course import Course_class
 from Students import students
 from Teacher import teacher
 from Upload import upload
-connection=pyodbc.connect('Driver={SQL Server};SERVER=KAREEM;DATABASE=Coursiz;Trusted_Connection=yes')
-cursor = connection.cursor()
+from submissions import submissions
+
 
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
+
+
 
 class SignInForm(FlaskForm):
     Email = StringField('Email', validators=[DataRequired()])
@@ -62,10 +64,21 @@ def create_announcement():
     Upload_title = request_data['Title']
     Upload_Description = request_data['Description']
     Upload_link = request_data['Link']
+    
+
+
+
 
     # Create a new announcement.
     Upload = upload()
     Upload.insert_upload(Upload_title,Upload_type,Upload_Description, Upload_link,Course_code)
+    if Upload_type=="Assignment":
+        A_deadline = request_data['deadline']
+        A_grade= request_data['assigngrade']
+        while A_grade == "None":
+            flash('Please enter grade', 'error')
+        submission=submissions()
+        submission.createSubmission(Upload.id,Course_code,A_grade,A_deadline)
     return redirect(url_for('courses'))
 
 @app.route('/Signin', methods=['GET', 'POST'])
@@ -186,4 +199,4 @@ def contact():
     return render_template('contact.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=80,debug=True)
+       app.run(host="0.0.0.0",port=80,debug=True)
