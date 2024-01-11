@@ -9,7 +9,6 @@ class Course_class:
         self.Capacity = Capacity
         self.teacher_name = teacher_name
         self.Number_enrolled = 0
-
     def createCourse(self):
         if len(self.teacher_name.split())!=2:
             return False
