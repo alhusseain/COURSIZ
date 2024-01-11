@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 
 import sys
 import os
-sys.path.insert(0, './classes')
+sys.path.insert(0, os.path.abspath('classes'))
 import users
 from course import Course_class
 from Students import students
